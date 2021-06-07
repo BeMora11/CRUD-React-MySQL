@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Card from '../components/Card';
 import Nabvar from '../components/Navbar';
 import { urlProducto } from '../config';
+import axios from 'axios'
 
 const Home = () => {
 
@@ -9,8 +10,8 @@ const Home = () => {
 
   const getProductos = async () => {
     try {
-      let req = await fetch(urlProducto + '?op=getProductos');
-      let res = await req.json();
+      let req = await axios.get(urlProducto + '?op=getProductos');
+      let res = await req.data;
       // console.log(res)
       setProductos(res);
     } catch (err) {

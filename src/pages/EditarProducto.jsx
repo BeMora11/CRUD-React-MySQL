@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { urlProducto } from '../config';
 import { useParams, useHistory } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import axios from 'axios';
 
 const EditarProducto = () => {
 
@@ -23,11 +24,8 @@ const EditarProducto = () => {
     data.append('id', productoID);
 
     try {
-      let req = await fetch(urlProducto + '?op=getProducto', {
-        method: 'POST',
-        body: data
-      });
-      let res = await req.json();
+      let req = await axios.post(urlProducto + '?op=getProducto', data);
+      let res = await req.data;
 
       setNombre(res.nombre_producto);
       setPrecio(res.precio_producto);
@@ -49,11 +47,8 @@ const EditarProducto = () => {
     data.append('imagen', imagen);
     data.append('id', productoID);
 
-    fetch(urlProducto + '?op=updateProducto', {
-      method: 'POST',
-      body: data
-    })
-      .then(r => r.text())
+    axios.post(urlProducto + '?op=updateProducto', data)
+      .then(r => r.data)
       .then(r => {
         // console.log(r)
         if (r == 1) {
@@ -71,11 +66,8 @@ const EditarProducto = () => {
 
     data.append('id', productoID);
 
-    fetch(urlProducto + '?op=deleteProducto', {
-      method: 'POST',
-      body: data
-    })
-      .then(r => r.text())
+    axios.post(urlProducto + '?op=deleteProducto', data)
+      .then(r => r.data)
       .then(r => {
         // console.log(r)
         if (r == 1) {

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { urlProducto } from '../config';
@@ -21,11 +22,8 @@ const NuevoProducto = () => {
     data.append('stock', stock);
     data.append('imagen', imagen);
 
-    fetch(urlProducto + '?op=newProducto', {
-      method: 'POST',
-      body: data
-    })
-      .then(r => r.text())
+    axios.post(urlProducto + '?op=newProducto', data)
+      .then(r => r.data)
       .then(r => {
         // console.log(r)
         if (r == 1) {
